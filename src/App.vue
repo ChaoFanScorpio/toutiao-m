@@ -6,6 +6,7 @@
   <!-- 路由出口 如果没有路由页面不会生效 -->
   <router-view />
   <h1>头条</h1>
+  <i class="iconfont icon-gengduo"></i>
 </template>
 
 <script>
