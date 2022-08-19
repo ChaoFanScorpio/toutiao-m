@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { login } from '@/api/user'
+import { login, sendSms } from '@/api/user'
 
 export default {
   data () {
@@ -90,9 +90,10 @@ export default {
 
       // 3. 请求登录
       try {
-        const res = await login(users)
+        const { data } = await login(users)
         this.$toast.success('登录成功')
-        console.log('登录成功', res)
+        this.$store.commit('setUser', data.data)
+        console.log('登录成功')
       } catch (error) {
         if (error.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')
@@ -119,12 +120,27 @@ export default {
 
       // 显示倒计时
       this.isContDownShow = true
+
+      this.$toast.loading({
+        message: '发送中...',
+        forbidClick: true,
+        duration: 0
+      })
+      // 发送验证码
+      try {
+        const res = await sendSms(this.loginModel.mobile)
+        console.log('发送成功', res)
+        this.$toast.success('发送成功')
+      } catch (error) {
+        console.log('发送失败', error)
+        this.isContDownShow = false
+        if (error.response.status === 429) {
+          this.$toast.error('发送频繁,请稍后重试')
+        } else {
+          this.$toast.error('发送失败,请稍后重试')
+        }
+      }
     }
-
-    // onFinish () {
-    //   this.isContDownShow = false
-    // }
-
   }
 }
 
