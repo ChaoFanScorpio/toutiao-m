@@ -5,32 +5,32 @@
     <!-- tabbar -->
     <!-- route 开启路由 模式 to="/"开启路由v-model会失效 -->
     <van-tabbar route>
-      <van-tabbar-item to="/home">
+      <van-tabbar-item replace to="/home">
         <template v-slot:icon>
           <i class="iconfont icon-shouye"></i>
         </template>
         <span class="text">首 页</span>
       </van-tabbar-item>
 
-      <van-tabbar-item to="/qa">
+      <van-tabbar-item replace to="/qa">
         <template v-slot:icon>
           <i class="iconfont icon-wenda"></i>
         </template>
         <span class="text">问 答</span>
       </van-tabbar-item>
 
-      <van-tabbar-item to="/video">
+      <van-tabbar-item replace to="/video">
         <template v-slot:icon>
           <i class="iconfont icon-shipin"></i>
         </template>
         <span class="text">视 频</span>
       </van-tabbar-item>
 
-      <van-tabbar-item to="/my">
+      <van-tabbar-item replace to="/my">
         <template v-slot:icon>
           <i class="iconfont icon-wode"></i>
         </template>
-        <span class="text">我 的</span>
+        <span class="text">{{ $store.state.user ? "我 的" : "未登录" }}</span>
       </van-tabbar-item>
     </van-tabbar>
   </div>
@@ -46,7 +46,7 @@ export default ({
   computed: {},
   data () {
     return {
-      active: false
+      active: 0
     }
   }
 })

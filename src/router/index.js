@@ -11,7 +11,7 @@ const routes = [
   {
     path: '/',
     name: 'layout',
-    redirect: '/home',
+    // redirect: '/home',
     children: [
       {
         path: '/home',

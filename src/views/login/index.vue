@@ -1,7 +1,17 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录" />
+    <van-nav-bar
+      class="page-nav-bar"
+      left-arrow
+      title="登录"
+      @click="onClickLeft"
+    >
+      <template #left>
+        <van-icon name="cross" size="24" />
+      </template>
+    </van-nav-bar>
+
     <!-- 登录表单 -->
     <van-form ref="loginForm" @submit="onSubmit">
       <!-- 账号 -->
@@ -92,8 +102,11 @@ export default {
       try {
         const { data } = await login(users)
         this.$toast.success('登录成功')
+        // 存入token store 和 本地
         this.$store.commit('setUser', data.data)
         console.log('登录成功')
+        // this.$router.push('/')
+        this.onClickLeft()
       } catch (error) {
         if (error.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')
@@ -140,6 +153,9 @@ export default {
           this.$toast.error('发送失败,请稍后重试')
         }
       }
+    },
+    onClickLeft () {
+      history.back()
     }
   }
 }
